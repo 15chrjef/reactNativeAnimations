@@ -7,7 +7,7 @@ import {
   View,
   Animated,
   LayoutAnimation,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 var {height, width} = Dimensions.get('window');
 import BouncyBox from '../components/BouncyBox.js'
@@ -57,10 +57,12 @@ const styles = StyleSheet.create({
   },
   ListView: {
     marginTop: 40,
-    width: width * .95,
+    justifyContent: 'center',
   },
   row:{
+    marginTop: 10,
     flexDirection: 'row',
+    width: width * .95,
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     alignItems: 'center',
