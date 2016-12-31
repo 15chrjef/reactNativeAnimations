@@ -16,12 +16,15 @@ export default class BouncyBox extends React.Component {
       bounceValue: new Animated.Value(0),
       pressAction: new Animated.Value(0),
       buttonWidth: 0,
-      buttonHeight: 0
+      buttonHeight: 0,
+      textStyle: styles.text1
+
     };
     this.handlePressIn = this.handlePressIn.bind(this)
     this.handlePressOut = this.handlePressOut.bind(this)
     this.getProgressStyles = this.getProgressStyles.bind(this)
     this.getButtonWidthLayout = this.getButtonWidthLayout.bind(this)
+    this.textStyles = this.textStyles.bind(this)
   }
   componentWillMount() {
     this._value = 0;
@@ -66,6 +69,18 @@ export default class BouncyBox extends React.Component {
       backgroundColor: '#F06292',
     }
   }
+  textStyles() {
+    var color = this.state.pressAction.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['black', 'white']
+    })
+    return {
+      color: color,
+      fontSize: 20, 
+      alignSelf: 'center', 
+      backgroundColor: 'transparent'
+    }
+  }
   render() {
     return (
       <TouchableWithoutFeedback 
@@ -81,7 +96,7 @@ export default class BouncyBox extends React.Component {
 					>
             <Animated.View style={[styles.bgFill, this.getProgressStyles()]}/>
             <Image style={{marginTop: 10, width: 177, height: 130}}  source={{uri:`${this.props.image}`}}/>
-            <Text style={{fontSize: 20, alignSelf: 'center', backgroundColor: 'transparent'}}>{this.props.text}</Text>
+            <Animated.Text style={this.textStyles()}>{this.props.text}</Animated.Text>
           </Animated.View>
       </TouchableWithoutFeedback>
     );
@@ -101,5 +116,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0
+  },
+
+  text2: {
+    fontSize: 20, 
+    alignSelf: 'center', 
+    backgroundColor: 'transparent',
+    color: 'white'  
   }
 });
