@@ -35,7 +35,7 @@ export default class BouncyBox extends React.Component {
         toValue: 1,                         // Animate to smaller size
         friction: 8,                          // Animate to smaller size
 	 }).start()
-	 } , 250 )                             // Start the animation
+	 } , 150 )                             // Start the animation
   }
   handlePressIn() {
     Animated.timing(this.state.pressAction, {
