@@ -7,8 +7,7 @@ import {
 	Image,
   TouchableWithoutFeedback
 } from 'react-native';
-var ACTION_TIMER = 1000;
-var COLORS = ['#FCE4EC', '#F06292'];
+var ACTION_TIMER = 500;
 
 export default class BouncyBox extends React.Component {
   constructor(props) {
@@ -17,6 +16,7 @@ export default class BouncyBox extends React.Component {
       bounceValue: new Animated.Value(0),
       pressAction: new Animated.Value(0),
       buttonWidth: 0,
+      buttonHeight: 0
     };
     this.handlePressIn = this.handlePressIn.bind(this)
     this.handlePressOut = this.handlePressOut.bind(this)
@@ -51,8 +51,8 @@ export default class BouncyBox extends React.Component {
   }
    getButtonWidthLayout(e) {
     this.setState({
-        buttonWidth: e.nativeEvent.layout.width - 6,
-        buttonHeight: e.nativeEvent.layout.height - 6
+        buttonWidth: e.nativeEvent.layout.width,
+        buttonHeight: e.nativeEvent.layout.height
     });
   }
   getProgressStyles() {
@@ -60,34 +60,28 @@ export default class BouncyBox extends React.Component {
       inputRange: [0, 1],
       outputRange: [0, this.state.buttonWidth]
     })
-    var bgColor = this.state.pressAction.interpolate ({
-      inputRange: [0, 1],
-      outputRange: COLORS
-    })
-    console.log(COLORS[0], COLORS[1])
-    console.log(this.state.buttonWidth, bgColor, width)
     return {
-      width: this.state.width,
-      height: this.state.height,
-      backgroundColor: bgColor,
+      width: width,
+      height: this.state.buttonHeight,
+      backgroundColor: '#F06292',
     }
   }
   render() {
-		console.log(this.props.image)
     return (
       <TouchableWithoutFeedback 
         style={{width: 177}}
         onPressIn={this.handlePressIn}
         onPressOut={this.handlePressOut}
-        >
+        onLayout={this.getButtonWidthLayout}
+      >
          <Animated.View     
-          onLayout={this.getButtonWidthLayout}
 					style={[{ transform: [                        // `transform` is an ordered array
             {scale: this.state.bounceValue},  // Map `bounceValue` to `scale`
-          ]}, styles.shadowBox, this.getProgressStyles()]}
+          ]}, styles.shadowBox]}
 					>
+            <Animated.View style={[styles.bgFill, this.getProgressStyles()]}/>
             <Image style={{marginTop: 10, width: 177, height: 130}}  source={{uri:`${this.props.image}`}}/>
-            <Text style={{fontSize: 20, alignSelf: 'center'}}>{this.props.text}</Text>
+            <Text style={{fontSize: 20, alignSelf: 'center', backgroundColor: 'transparent'}}>{this.props.text}</Text>
           </Animated.View>
       </TouchableWithoutFeedback>
     );
@@ -100,6 +94,12 @@ const styles = StyleSheet.create({
 		shadowColor: 'black',
 		shadowOpacity: 1,
 		shadowOffset: {width: 1, height: 1},
-		shadowRadius: 2,
+		shadowRadius: 1,
+    backgroundColor: '#FCE4EC'
   },
+  bgFill: {
+    position: 'absolute',
+    top: 0,
+    left: 0
+  }
 });
