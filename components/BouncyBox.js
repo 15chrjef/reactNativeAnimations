@@ -18,7 +18,6 @@ export default class BouncyBox extends React.Component {
       buttonWidth: 0,
       buttonHeight: 0,
       textStyle: styles.text1
-
     };
     this.handlePressIn = this.handlePressIn.bind(this)
     this.handlePressOut = this.handlePressOut.bind(this)
