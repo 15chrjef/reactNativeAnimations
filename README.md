@@ -8,5 +8,5 @@ Download Xcode from apple
 git clone https://github.com/15chrjef/reactNativeAnimations animations
 cd animations
 npm i
-npm start
 ```
+open 'iOS simulator' in exponent and navigate to your 'animations' folder
